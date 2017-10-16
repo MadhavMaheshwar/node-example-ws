@@ -4,6 +4,8 @@ const fs = require('fs');
 const express = require('express');
 const hbs = require('hbs');
 
+const port = process.env.port || 3000;
+
 var app =  express();
 
 hbs.registerPartials(__dirname + '/views/partials');
@@ -18,12 +20,12 @@ app.use((req, res, next) => {
     console.log(log);
     fs.appendFile('log.txt', `${log}\n`, function(err) { if(err) console.log('Error: Unable to write file.'); });
     
-    res.render('about.hbs', {
-        pageTitle: 'Maintenance',
-        title: 'At Work!',
-        message: 'Currently under maintenance. Please check-in later.'
-    });
-    // next();
+    // res.render('about.hbs', {
+    //     pageTitle: 'Maintenance',
+    //     title: 'At Work!',
+    //     message: 'Currently under maintenance. Please check-in later.'
+    // });
+    next();
 });
 
 
@@ -70,6 +72,6 @@ app.get('/bad', (req, res) => {
 
 
 
-app.listen(3000, () => {
-    console.log('Server is up on port 3000!');
+app.listen(port, () => {
+    console.log(`Server is up on port ${port}!`);
 });
